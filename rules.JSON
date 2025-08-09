@@ -1,0 +1,62 @@
+[
+  {
+    "description": "Rule 1 - Mark SBI Securities recent emails",
+    "condition": "all",
+    "rules": [
+      {
+        "field": "From",
+        "predicate": "contains",
+        "value": "sbicapsec.com"
+      },
+      {
+        "field": "Date received",
+        "predicate": "less_than",
+        "value": 1,
+        "unit": "days"
+      }
+    ],
+    "actions": [
+      {
+        "action": "mark_as_read"
+      }
+    ]
+  },
+  {
+    "description": "Rule 2 - Mark Splitwise emails",
+    "condition": "all",
+    "rules": [
+      {
+        "field": "From",
+        "predicate": "contains",
+        "value": "splitwise.com"
+      }
+    ],
+    "actions": [
+      {
+        "action": "mark_as_read"
+      }
+    ]
+  },
+  {
+    "description": "Rule 3 - Move JobLeads emails with 'Contact' in subject",
+    "condition": "all",
+    "rules": [
+      {
+        "field": "From",
+        "predicate": "contains",
+        "value": "jobleads.com"
+      },
+      {
+        "field": "Subject",
+        "predicate": "contains",
+        "value": "Contact"
+      }
+    ],
+    "actions": [
+      {
+        "action": "move_message",
+        "target_mailbox": "Jobs"
+      }
+    ]
+  }
+]

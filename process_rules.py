@@ -15,9 +15,33 @@ def load_rules():
     return rules
 
 def match_rule(email, rule):
-    sender_match = any(f.lower() in email['sender'].lower() for f in rule['conditions']['from'])
-    subject_match = any(s.lower() in email['subject'].lower() for s in rule['conditions']['subject_contains'])
-    return sender_match and subject_match
+
+    conditions = rule.get('conditions', {})
+    predicate = rule.get('predicate', 'All').lower()
+
+    checks = []
+
+    # Check 'from' conditions if present
+    if 'from' in conditions:
+        checks.append(any(f.lower() in email['sender'].lower() for f in conditions['from']))
+    else:
+        # If no 'from' condition, consider it matched by default
+        checks.append(True)
+
+    # Check 'subject_contains' conditions if present
+    if 'subject_contains' in conditions:
+        checks.append(any(s.lower() in email['subject'].lower() for s in conditions['subject_contains']))
+    else:
+        # If no subject_contains condition, consider it matched by default
+        checks.append(True)
+
+    if predicate == 'all':
+        return all(checks)
+    elif predicate == 'any':
+        return any(checks)
+    else:
+        logger.warning(f"Unknown predicate '{rule.get('predicate')}', defaulting to 'All'")
+        return all(checks)
 
 def apply_rules(service):
     rules = load_rules()

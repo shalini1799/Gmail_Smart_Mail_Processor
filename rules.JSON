@@ -1,6 +1,8 @@
+
 [
   {
     "name": "Job Alerts",
+    "predicate": "any",
     "conditions": {
       "from": ["hirist.tech", "linkedin.com"],
       "subject_contains": ["job", "application", "hiring"]
@@ -12,6 +14,7 @@
   },
   {
     "name": "Shopping & Deals",
+    "predicate": "all",
     "conditions": {
       "from": ["ajio.in", "mailer.ajio.in"],
       "subject_contains": ["offer", "discount", "sale", "tee season"]
@@ -23,6 +26,7 @@
   },
   {
     "name": "Promotions",
+    "predicate": "any",
     "conditions": {
       "from": ["primevideo.com", "upgrad.com"],
       "subject_contains": ["watch", "movies", "career", "masterclass"]

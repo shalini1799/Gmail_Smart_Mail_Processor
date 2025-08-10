@@ -43,10 +43,9 @@ def match_rule(email, rule):
         logger.warning(f"Unknown predicate '{rule.get('predicate')}', defaulting to 'All'")
         return all(checks)
 
-def apply_rules(service):
+def apply_rules(service, conn):
     rules = load_rules()
 
-    conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM emails WHERE is_read=0 AND processed=0")
     emails = cursor.fetchall()
@@ -97,5 +96,4 @@ def apply_rules(service):
                 logger.info(f"Email '{subject}' from '{sender}' matched rule '{rule['name']}'. Applied label '{rule['actions'].get('label')}' and marked as read.")
                 processed_count += 1
 
-    conn.close()
     logger.info(f"Finished applying rules. Total emails processed: {processed_count}")

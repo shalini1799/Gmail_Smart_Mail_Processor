@@ -84,7 +84,7 @@ def test_apply_rules(mock_connect, mock_load_rules):
 
     # Patch get_or_create_label to return a fake label id
     with patch("process_rules.get_or_create_label", return_value="LabelID123"):
-        process_rules.apply_rules(mock_service)
+        process_rules.apply_rules(mock_service, mock_conn)   # <-- pass mock_conn here
 
     # Validate DB queries and commits called at least once
     mock_cursor.execute.assert_any_call("SELECT * FROM emails WHERE is_read=0 AND processed=0")

@@ -22,7 +22,7 @@ def gmail_authenticate():
         logger.info("OAuth flow complete and token saved.")
     return build('gmail', 'v1', credentials=creds)
 
-def fetch_top_emails(service, max_results=5):
+def fetch_top_emails(service, max_results=10):
     logger.info(f"Fetching top {max_results} emails from Gmail inbox...")
     results = service.users().messages().list(userId='me', maxResults=max_results, labelIds=['INBOX']).execute()
     messages = results.get('messages', [])

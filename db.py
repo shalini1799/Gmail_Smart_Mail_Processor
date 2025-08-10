@@ -1,35 +1,46 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from base import Base  
-from model import Email
+import sqlite3
+import logging
+from config import DB_FILE
 
-DATABASE_URL = "sqlite:///emails.db"
-engine = create_engine(DATABASE_URL, echo=True)
-SessionLocal = sessionmaker(bind=engine)
+logger = logging.getLogger(__name__)
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+def init_db():
+    with sqlite3.connect(DB_FILE) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS emails (
+            id TEXT PRIMARY KEY,
+            sender TEXT,
+            subject TEXT,
+            snippet TEXT,
+            labels TEXT,
+            internal_date TEXT,
+            is_read INTEGER DEFAULT 0,
+            processed INTEGER DEFAULT 0  
+        )
+        """)
+        conn.commit()
+    logger.info(f"Database initialized or already exists: {DB_FILE}")
 
-        
-def load_emails_from_db():
-    db = SessionLocal()
-    try:
-        emails = db.query(Email).all()
-        email_dicts = []
-        for email_obj in emails:
-            email_dicts.append({
-                'id': email_obj.id,
-                'sender': email_obj.sender or '',
-                'subject': email_obj.subject or '',
-                'received_at': email_obj.received_at,  # datetime object with tzinfo if set
-                'snippet': email_obj.snippet or '',
-                # If you have labels in DB, add here, else empty list
-                'labels': []
-            })
-        return email_dicts
-    finally:
-        db.close()        
+def store_emails(email_data):
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    count = 0
+    for e in email_data:
+        # Check if email already exists
+        cursor.execute("SELECT processed FROM emails WHERE id=?", (e['id'],))
+        row = cursor.fetchone()
+        if row is None:
+            # New email, insert with processed=0
+            cursor.execute("""
+                INSERT INTO emails (id, sender, subject, snippet, labels, internal_date, is_read, processed)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """, (e['id'], e['sender'], e['subject'], e['snippet'], e['labels'], e['internal_date'], 0, 0))
+            count += 1
+        else:
+            # Email exists, maybe update some fields but preserve processed flag
+            # For simplicity, skip updating to preserve processed status
+            pass
+    conn.commit()
+    conn.close()
+    logger.info(f"Stored {count} new emails in database.")

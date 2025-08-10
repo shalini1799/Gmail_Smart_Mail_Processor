@@ -37,12 +37,10 @@ A standalone Python project that integrates with the **Gmail API** to:
 ├── process_rules.py           # Script to process stored emails using JSON rules
 ├── rules.json                 # Sample rules file
 ├── db.py                      # Database connection and schema creation
-├── models.py                  # SQLAlchemy models for Emails and Rules
-├── requirements.txt           # Python dependencies
 ├── LICENSE                   # Custom restrictive license
 ├── README.md                 # Project documentation
 ├── main.py                   # main orchestrator file
-├── gmail_api_creds.json       # OAuth client credentials (gitignored or shared securely)
+├── credentials.json       # OAuth client credentials (gitignored or shared securely)
 └── tests/                    # Unit and integration tests
     ├── test_fetch.py          # Tests for fetch_store_emails
     ├── test_process.py        # Tests for process_rules

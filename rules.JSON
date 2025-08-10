@@ -1,62 +1,35 @@
 [
   {
-    "description": "Rule 1 - Mark SBI Securities recent emails",
-    "condition": "all",
-    "rules": [
-      {
-        "field": "From",
-        "predicate": "contains",
-        "value": "sbicapsec.com"
-      },
-      {
-        "field": "Date received",
-        "predicate": "less_than",
-        "value": 1,
-        "unit": "days"
-      }
-    ],
-    "actions": [
-      {
-        "action": "mark_as_read"
-      }
-    ]
+    "name": "Job Alerts",
+    "conditions": {
+      "from": ["hirist.tech", "linkedin.com"],
+      "subject_contains": ["job", "application", "hiring"]
+    },
+    "actions": {
+      "mark_as_read": true,
+      "label": "Jobs"
+    }
   },
   {
-    "description": "Rule 2 - Mark Splitwise emails",
-    "condition": "all",
-    "rules": [
-      {
-        "field": "From",
-        "predicate": "contains",
-        "value": "splitwise.com"
-      }
-    ],
-    "actions": [
-      {
-        "action": "mark_as_read"
-      }
-    ]
+    "name": "Shopping & Deals",
+    "conditions": {
+      "from": ["ajio.in", "mailer.ajio.in"],
+      "subject_contains": ["offer", "discount", "sale", "tee season"]
+    },
+    "actions": {
+      "mark_as_read": true,
+      "label": "Shopping"
+    }
   },
   {
-    "description": "Rule 3 - Move JobLeads emails with 'Contact' in subject",
-    "condition": "all",
-    "rules": [
-      {
-        "field": "From",
-        "predicate": "contains",
-        "value": "jobleads.com"
-      },
-      {
-        "field": "Subject",
-        "predicate": "contains",
-        "value": "Contact"
-      }
-    ],
-    "actions": [
-      {
-        "action": "move_message",
-        "target_mailbox": "Jobs"
-      }
-    ]
+    "name": "Promotions",
+    "conditions": {
+      "from": ["primevideo.com", "upgrad.com"],
+      "subject_contains": ["watch", "movies", "career", "masterclass"]
+    },
+    "actions": {
+      "mark_as_read": true,
+      "label": "Promotions"
+    }
   }
 ]

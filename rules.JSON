@@ -1,7 +1,7 @@
 [
   {
     "name": "Job Alerts",
-    "predicate": "Any",
+    "predicate": "any",
     "conditions": [
       { "field": "from", "predicate": "contains", "value": "hirist.tech" },
       { "field": "from", "predicate": "contains", "value": "linkedin.com" },
@@ -16,7 +16,7 @@
   },
   {
     "name": "Shopping & Deals",
-    "predicate": "All",
+    "predicate": "any",
     "conditions": [
       { "field": "from", "predicate": "equals", "value": "ajio.in" },
       { "field": "from", "predicate": "equals", "value": "mailer.ajio.in" },
@@ -32,9 +32,9 @@
   },
   {
     "name": "Older than 30 days",
-    "predicate": "All",
+    "predicate": "all",
     "conditions": [
-      { "field": "received", "predicate": "less_than_days", "value": 30 }
+      { "field": "received", "predicate": "greater_than_days", "value": 30 }
     ],
     "actions": {
       "mark_as_read": false,

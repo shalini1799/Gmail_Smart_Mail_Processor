@@ -66,7 +66,7 @@ Follow these steps to get the project running on your local machine:
   NOTE : Ignore python 3.8 is installed
 
 ### Step 2: Install Python dependencies 
-  pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client sqlalchemy 
+  pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
 
 ### Step 3: Enable Gmail API and create OAuth credentials
 

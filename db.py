@@ -25,9 +25,6 @@ def init_db(conn=None):
     """)
     conn.commit()
 
-    if close_conn:
-        conn.close()
-
     logger.info(f"Database initialized or already exists: {DB_FILE}")
 
 def store_emails(email_data, conn=None):
@@ -52,8 +49,5 @@ def store_emails(email_data, conn=None):
             pass
 
     conn.commit()
-
-    if close_conn:
-        conn.close()
 
     logger.info(f"Stored {count} new emails in database.")

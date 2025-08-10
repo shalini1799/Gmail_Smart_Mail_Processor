@@ -1,39 +1,44 @@
-
 [
   {
     "name": "Job Alerts",
-    "predicate": "any",
-    "conditions": {
-      "from": ["hirist.tech", "linkedin.com"],
-      "subject_contains": ["job", "application", "hiring"]
-    },
+    "predicate": "Any",
+    "conditions": [
+      { "field": "from", "predicate": "contains", "value": "hirist.tech" },
+      { "field": "from", "predicate": "contains", "value": "linkedin.com" },
+      { "field": "subject", "predicate": "contains", "value": "job" },
+      { "field": "subject", "predicate": "contains", "value": "application" },
+      { "field": "subject", "predicate": "contains", "value": "hiring" }
+    ],
     "actions": {
       "mark_as_read": true,
-      "label": "Jobs"
+      "move_to_folder": "Jobs"
     }
   },
   {
     "name": "Shopping & Deals",
-    "predicate": "all",
-    "conditions": {
-      "from": ["ajio.in", "mailer.ajio.in"],
-      "subject_contains": ["offer", "discount", "sale", "tee season"]
-    },
+    "predicate": "All",
+    "conditions": [
+      { "field": "from", "predicate": "equals", "value": "ajio.in" },
+      { "field": "from", "predicate": "equals", "value": "mailer.ajio.in" },
+      { "field": "subject", "predicate": "contains", "value": "offer" },
+      { "field": "subject", "predicate": "contains", "value": "discount" },
+      { "field": "subject", "predicate": "contains", "value": "sale" },
+      { "field": "subject", "predicate": "contains", "value": "tee season" }
+    ],
     "actions": {
       "mark_as_read": true,
-      "label": "Shopping"
+      "move_to_folder": "Shopping"
     }
   },
   {
-    "name": "Promotions",
-    "predicate": "any",
-    "conditions": {
-      "from": ["primevideo.com", "upgrad.com"],
-      "subject_contains": ["watch", "movies", "career", "masterclass"]
-    },
+    "name": "Older than 30 days",
+    "predicate": "All",
+    "conditions": [
+      { "field": "received", "predicate": "less_than_days", "value": 30 }
+    ],
     "actions": {
-      "mark_as_read": true,
-      "label": "Promotions"
+      "mark_as_read": false,
+      "move_to_folder": "30_days_old_mails"
     }
   }
 ]
